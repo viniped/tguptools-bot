@@ -63,27 +63,17 @@
 
     @keyframes colorGlow { 0% { box-shadow: 0 0 15px 8px var(--primary-glow);} 33% { box-shadow: 0 0 15px 8px var(--secondary-glow);} 66% { box-shadow: 0 0 15px 8px var(--tertiary-glow);} 100% { box-shadow: 0 0 15px 8px var(--primary-glow);} }
 
-    .grid-container { 
-      display: grid; 
-      grid-template-columns: 1fr; 
-      gap: 15px; 
-      margin-top: 20px;
-      /* Removido: display: none - agora sempre visível */
-    }
+    .grid-container { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
 
     .plan-card {
       background: var(--card-bg);
       border-radius: 10px;
       box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-    
+      overflow: hidden;
       text-align: center;
       padding: 10px;
       cursor: pointer;
-      transition: ;
       transition: transform 0.2s ease-in-out;
-      /* Adicionado: garantir que o card está sempre visível */
-      opacity: 1;
-      visibility: visible;
     }
 
     .plan-card:hover {
@@ -190,20 +180,20 @@
     </div>
   </div>
 
-    <div class="grid-container" id="planos">
+  <!-- Container dos Planos (inicialmente oculto) -->
+  <div class="grid-container" id="planos" style="display: none;"></div>
+  
+  <!-- Card explicativo dos produtos do bot -->
+  <div class="info-card">
+    <h3>Como funcionam os produtos do bot</h3>
+    <p>Após escolher um plano, toque no card para enviar os dados ao Telegram. O pedido é processado pelo nosso bot e você recebe tudo automático.</p>
+    <ul>
+      <li><b>Entrega:</b> imediata via bot após confirmação.</li>
+      <li><b>Suporte:</b> em caso de falha inicial, fazemos troca; não resolvendo em até 7 dias, reembolsamos conforme CDC.</li>
+      <li><b>Cuidados:</b> não compartilhe credenciais; alterações indevidas podem invalidar a garantia.</li>
+    </ul>
+    <p style="margin-top:10px;">Dúvidas? Fale com a gente no suporte do bot. 👍</p>
   </div>
-
-
-<div class="info-card">
-  <h3>Como funcionam os produtos do bot</h3>
-  <p>Após escolher um plano, toque no card para enviar os dados ao Telegram. O pedido é processado pelo nosso bot e você recebe tudo automático.</p>
-  <ul>
-    <li><b>Entrega:</b> imediata via bot após confirmação.</li>
-    <li><b>Suporte:</b> em caso de falha inicial, fazemos troca; não resolvendo em até 7 dias, reembolsamos conforme CDC.</li>
-    <li><b>Cuidados:</b> não compartilhe credenciais; alterações indevidas podem invalidar a garantia.</li>
-  </ul>
-  <p style="margin-top:10px;">Dúvidas? Fale com a gente no suporte do bot. 👍</p>
-</div>
 
 
   <script>
@@ -212,26 +202,25 @@
     Telegram.WebApp.expand();
 
     // ===== Termos =====
-    function aceitarTermos(){ 
-      const modal = document.getElementById('modal-termos'); 
+    function aceitarTermos() {
+      const modal = document.getElementById('modal-termos');
+      const planosContainer = document.getElementById('planos');
       if (modal) modal.style.display = 'none';
-      // Removido: código que alterava o display do container de planos
-      // Os planos já estão visíveis por padrão agora
+      if (planosContainer) planosContainer.style.display = 'grid';
     }
     window.aceitarTermos = aceitarTermos;
 
     // ===== Planos =====
     const planos = {
-    "DeepRat Chat GPT4+": {
-      "imagem": "https://private-user-images.githubusercontent.com/125911962/509741419-e7c1971c-bc47-488b-92a0-5328c6ac0e0d.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjIyODAwNjEsIm5iZiI6MTc2MjI3OTc2MSwicGF0aCI6Ii8xMjU5MTE5NjIvNTA5NzQxNDE5LWU3YzE5NzFjLWJjNDctNDg4Yi05MmEwLTUzMjhjNmFjMGUwZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTEwNFQxODA5MjFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iMzkyZjI1YWU0MDcwOGM2MTY3ODhjNTEyZGQzMmExMmY3NDViODBmOTZhNzlkMDI5MDMxZmQyOGY2NGM4NzVhJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.u4A_p0fzVjZEMMkXvtaLqUx-Vdy3Vpl-N0XhHuGCQlU",
-      "chat_id": -1001904167152,
-      "planos": {
-        "1 mês": "R$25,00",
-        "3 meses": "R$60,00"
+      "DeepRat Chat GPT4+": {
+        "imagem": "https://private-user-images.githubusercontent.com/125911962/509741419-e7c1971c-bc47-488b-92a0-5328c6ac0e0d.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjIyODAwNjEsIm5iZiI6MTc2MjI3OTc2MSwicGF0aCI6Ii8xMjU5MTE5NjIvNTA5NzQxNDE5LWU3YzE5NzFjLWJjNDctNDg4Yi05MmEwLTUzMjhjNmFjMGUwZC5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUxMTA0JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTEwNFQxODA5MjFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT1iMzkyZjI1YWU0MDcwOGM2MTY3ODhjNTEyZGQzMmExMmY3NDViODBmOTZhNzlkMDI5MDMxZmQyOGY2NGM4NzVhJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.u4A_p0fzVjZEMMkXvtaLqUx-Vdy3Vpl-N0XhHuGCQlU",
+        "chat_id": -1001904167152,
+        "planos": {
+          "1 mês": "R$25,00",
+          "3 meses": "R$60,00"
+        }
       }
-    }
-  };
-
+    };
 
     const container = document.getElementById('planos');
     if (container) {
@@ -240,7 +229,12 @@
           const card = document.createElement('div');
           card.className = 'plan-card';
           card.onclick = () => enviarPlano(nome, tipoPlano, preco);
-          card.innerHTML = `<img src="${info.imagem}" alt="${nome}" /><div class="plan-name">${nome}</div><div class="plan-price">${tipoPlano}: ${preco}</div>`;
+          // ESTRUTURA EXATA DO HTML DE REFERÊNCIA
+          card.innerHTML = `
+            <img src="${info.imagem}" alt="${nome}" />
+            <div class="plan-name">${nome}</div>
+            <div class="plan-price">${tipoPlano}: ${preco}</div>
+          `;
           container.appendChild(card);
         }
       }
