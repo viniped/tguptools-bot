@@ -265,7 +265,7 @@
           "1 semana": "R$12,49",
           "1 mês": "R$47,99",
           "3 meses": "R$97,99",
-          "1 ano": "R$297,99"
+          "12 meses": "297,99"
         }
       },
 
@@ -303,14 +303,26 @@
       }
     }
 
-    function enviarPlano(nome, tipo, preco){
-      const chatId = planos[nome]?.chat_id || null;
-      try {
-        Telegram.WebApp.sendData(JSON.stringify({ canal: nome, plano: tipo, preco: preco, chat_id: chatId }));
-        Telegram.WebApp.close();
-      } catch (e) {
-        alert('Erro ao enviar dados: ' + e.message);
-      }
+    function enviarPlano(nome, tipo, preco) {
+        const chatId = planos[nome]?.chat_id || null;
+        const dados = {
+            canal: nome,
+            plano: tipo,
+            preco: preco,
+            chat_id: chatId
+        };
+
+        try {
+            // Log para você testar no console do navegador (inspecionar elemento)
+            console.log("Enviando:", dados);
+            
+            Telegram.WebApp.sendData(JSON.stringify(dados));
+            // O sendData costuma fechar o WebApp automaticamente, 
+            // mas se não fechar, o comando abaixo garante.
+            Telegram.WebApp.close(); 
+        } catch (e) {
+            alert('Erro ao enviar dados: ' + e.message);
+        }
     }
 
     // ===== Background: faíscas subindo =====
