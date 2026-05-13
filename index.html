@@ -61,13 +61,6 @@
 
     .section-title { margin-top: 70px; margin-bottom: 15px; text-align: left; font-size: var(--font-size-large); font-weight: bold; }
 
-    @keyframes colorGlow {
-      0% { box-shadow: 0 0 15px 8px var(--primary-glow);}
-      33% { box-shadow: 0 0 15px 8px var(--secondary-glow);}
-      66% { box-shadow: 0 0 15px 8px var(--tertiary-glow);}
-      100% { box-shadow: 0 0 15px 8px var(--primary-glow);}
-    }
-
     /* ===== GRID DE PLANOS ===== */
     .grid-container {
       display: grid;
@@ -75,8 +68,8 @@
       gap: 15px;
       margin-top: 20px;
       position: relative;
-      z-index: 3;                 /* garante acima de qualquer overlay */
-      opacity: 1 !important;      /* força visibilidade */
+      z-index: 3;
+      opacity: 1 !important;
       visibility: visible !important;
       filter: none !important;
     }
@@ -92,17 +85,11 @@
       transition: transform 0.2s ease-in-out;
       position: relative;
       z-index: 3;
-      opacity: 1 !important;      /* força visibilidade */
+      opacity: 1 !important;
       visibility: visible !important;
       filter: none !important;
     }
     .plan-card:hover { transform: scale(1.03); }
-
-    .plan-card img,
-    .plan-card * {
-      opacity: 1 !important;      /* nunca escurecer por hover global */
-      filter: none !important;
-    }
 
     .plan-card img {
       width: 100%;
@@ -115,7 +102,7 @@
     .plan-name { font-weight: bold; margin-top: 10px; font-size: var(--font-size-medium); }
     .plan-price { color: #ccc; font-size: var(--font-size-base); margin-top: 5px; }
 
-    /* Modal começa oculto; JS decide se exibe */
+    /* Modal */
     .modal {
       display: none;
       flex-direction: column;
@@ -132,117 +119,59 @@
       background: #222; border-radius: 8px; padding: 20px;
       width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; box-sizing: border-box; text-align: justify;
     }
-    .modal-content h3 { font-size: var(--font-size-medium); text-align: center; margin-bottom: 15px; }
-    .modal-content p { font-size: var(--font-size-base); line-height: 1.6; margin-bottom: 12px; }
     .modal button {
       margin-top: 20px; padding: 12px 20px; border: none; background-color: var(--button-bg);
-      color: white; border-radius: 5px; cursor: pointer; width: 100%; font-size: var(--font-size-base); font-weight: bold; transition: background-color 0.2s ease;
+      color: white; border-radius: 5px; cursor: pointer; width: 100%; font-size: var(--font-size-base); font-weight: bold;
     }
-    .modal button:hover { background-color: #45a049; }
 
     @media (min-width: 600px) {
-      body { padding: 20px; --font-size-base: 15px; --font-size-medium: 17px; --font-size-large: 22px; }
-      .logo { width: 130px; }
-      .section-title { margin-top: 80px; font-size: var(--font-size-xl); }
       .grid-container { grid-template-columns: 1fr 1fr; }
-      .modal-content { padding: 25px; }
-      .modal button { width: auto; padding: 10px 30px; }
     }
 
-    @media (min-width: 992px) {
-      body { padding: 30px 50px; --font-size-base: 16px; --font-size-medium: 18px; --font-size-large: 24px; --font-size-xl: 28px; }
-      .logo { width: 150px; }
-      .grid-container { gap: 20px; }
-      .plan-card { padding: 15px; }
-      .modal-content { padding: 30px; }
-    }
-
-    /* --- Card explicativo abaixo dos produtos --- */
     .info-card {
       background: rgba(27,30,30,0.85);
       backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.08);
       border-radius: 12px;
       padding: 16px;
       margin-top: 22px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
       color: var(--text-color);
       position: relative;
       z-index: 3;
     }
-    .info-card h3 { margin: 0 0 8px 0; font-size: var(--font-size-large); }
-    .info-card p, .info-card li { font-size: var(--font-size-base); color: #e5e7eb; }
-    .info-card ul { padding-left: 18px; margin: 10px 0 0 0; }
-    .info-card::before { content: ""; position: absolute; inset: 0; border-radius: 12px; pointer-events: none; }
   </style>
 </head>
 <body>
-  <!-- ===== Background ===== -->
   <canvas id="sparks"></canvas>
   <div class="vignette"></div>
 
-  <!-- ===== Conteúdo ===== -->
   <img src="static/logo.png" alt="Logo" class="logo" />
   <div class="section-title">Destaques</div>
 
-  <!-- Modal (controlado por JS) -->
   <div id="modal-termos" class="modal">
     <div class="modal-content">
       <h3>Termos de Compra, Garantia e Responsabilidades</h3>
-      <p><b>1. Condições Gerais:</b> Ao efetuar uma compra no Deep Rat, o cliente declara estar ciente e de acordo com os termos estabelecidos.</p>
-      <p><b>2. Integridade:</b> A integridade do produto após a entrega é de responsabilidade do cliente. Não nos responsabilizamos por danos causados por mau uso e alterações realizadas após a compra. Recomendamos que o cliente verifique as condições do produto imediatamente após o recebimento.</p>
-      <p><b>3. Garantia:</b> Produto recebido com problemas ou não funcional Se o produto apresentar falhas no momento do uso, tais como: Erro ao efetuar login; Produto sem plano ou benefícios ativos; Informações de acesso incorretas. O cliente terá direito à substituição do produto. Caso a troca não seja efetuada dentro do prazo de 7 dias, o Deep Rat se compromete a realizar o reembolso integral, conforme previsto no art. 18 do Código de Defesa do Consumidor (CDC)</p>
-      <p><b>4. Prazos:</b> Prazo para reportar problemas: O cliente deve informar qualquer problema em até 7 dias corridos após o recebimento do produto, conforme o direito de arrependimento para compras online (art. 49, CDC). Exclusões de garantia: Não nos responsabilizamos por problemas decorrentes de mau uso, compartilhamento de credenciais ou qualquer violação dos termos de uso do produto. Trocas e reembolsos: São processados após análise da solicitação, mediante comprovação de que o problema foi causado por falha no produto.</p>
-      <p><b>5. Reembolso:</b> Serão concedidos somente em casos de não recebimento do produto. Todas as entregas são automatizadas, e qualquer falha deve ser reportada para análise. Não serão concedidos reembolsos por insatisfação com o produto. Certifique-se de compreender todas as características do item antes da compra</p>
-      <p><b>6. Comprovação:</b> O cliente deve documentar o processo de acesso inicial ao produto por meio de gravação de vídeo. Essa gravação será usada para validação de suporte e reembolsos, caso necessário. A ausência dessa documentação impossibilitará a análise de reembolsos e suporte em eventuais disputas</p>
-      <p><b>7. Aceitação:</b> Ao concluir a compra, o cliente aceita integralmente os termos estabelecidos acima</p>
+      <p><b>1. Condições Gerais:</b> Ao efetuar uma compra, o cliente declara estar de acordo com os termos.</p>
+      <p><b>2. Garantia:</b> Direito à substituição ou reembolso se o produto apresentar falhas no momento do uso em até 7 dias.</p>
+      <p><b>3. Comprovação:</b> Recomendamos gravar vídeo do processo de acesso inicial para validação de suporte.</p>
       <button onclick="aceitarTermos()">Aceito os Termos</button>
     </div>
   </div>
 
-  <!-- Planos (sempre visíveis) -->
   <div class="grid-container" id="planos"></div>
 
   <div class="info-card">
     <h3>Como funcionam os produtos do bot</h3>
-    <p>Após escolher um plano, toque no card para enviar os dados ao Telegram. O pedido é processado pelo nosso bot e você recebe tudo automático.</p>
+    <p>Após escolher um plano, o pedido é processado e você recebe o acesso automaticamente via bot.</p>
     <ul>
-      <li><b>Entrega:</b> imediata via bot após confirmação você recebe um link e uma chave.</li>
-      <li><b>Suporte:</b> Damos suporte para nossos assinantes em um grupo exclusivo de segunda a sexta.</li>
-      <li><b>Cuidados:</b> não compartilhe credenciais; alterações indevidas podem invalidar a garantia e a sua ativação para o software.</li>
+      <li><b>Entrega:</b> imediata após confirmação.</li>
+      <li><b>Suporte:</b> segunda a sexta em grupo exclusivo.</li>
     </ul>
-    <p style="margin-top:10px;">Dúvidas? Fale com a gente no suporte do bot. 👍</p>
-    <h3>Quais Plataformas São Suportadas?</h3>
-
-    <p><b>São suportadas as seguintes plataformas:</b></p>
-
-    <ul style="margin-left: 20px;">
-      <li><b>Hotmart</b></li>
-      <li><b>Kiwify</b></li>
-      <li><b>Estratégia Concursos</b></li>
-      <li><b>Estratégia Militares</b></li>
-      <li><b>Estratégia Vestibulares</b></li>
-      <li><b>Estratégia Medicina</b></li>
-      <li><b>B7 WEB</b> – Modelo antigo – https://alunos.b7web.com.br/login</li>
-      <li><b>Estratégia CJ – Carreiras Jurídicas</b></li>
-      <li><b>Gran Concursos</b></li>
-      <li><b>Memberkit</b></li>
-    </ul>
-
-    <p style="margin-top:10px;"></p>
-    <h3>Eu Preciso de uma conta para baixar ?</h3>
-    <p>Sim, o software é feito para consumir os conteúdos dos sites desde que o cliente tenha um email e senha e produtos ativos nas plataformas</p>
-    
-    <h3>Comprei uma chave de ativação mas não tenho uma conta e agora ? </h3>
-    <p>Como deixamos claro que você precisa de uma conta para baixar os conteúdos caso você compre uma licença e não possa usar, não iremos fazer nenhum tipo de reembolso.</p>
-
-    
   </div>
 
   <script>
-    Telegram.WebApp.ready();
-    Telegram.WebApp.expand();
+    const tg = window.Telegram.WebApp;
+    tg.ready();
+    tg.expand();
 
     // ===== Termos =====
     function aceitarTermos() {
@@ -250,6 +179,7 @@
       const modal = document.getElementById('modal-termos');
       if (modal) modal.style.display = 'none';
     }
+
     (function initModal(){
       const aceitou = localStorage.getItem('aceitou_termos') === '1';
       const modal = document.getElementById('modal-termos');
@@ -268,21 +198,15 @@
           "12 meses": "R$297,99"
         }
       },
-
       "Mentoria ao vivo clonagem no Telegram": {
         imagem: "static/mentoria.jpg",
         chat_id: -1003863623674, 
-        planos: {
-          "1 mês": "R$19,97"
-        }
+        planos: { "1 mês": "R$19,97" }
       },
-
       "Mentoria Gravada clonagem no Telegram": {
         imagem: "static/mentoria.jpg",
         chat_id: -1003908604911,
-        planos: {
-          "1 mês": "R$24,97"
-        }
+        planos: { "1 mês": "R$24,97" }
       }
     };
 
@@ -292,7 +216,8 @@
         for (const [tipoPlano, preco] of Object.entries(info.planos)) {
           const card = document.createElement('div');
           card.className = 'plan-card';
-          card.onclick = () => enviarPlano(nome, tipoPlano, preco);
+          // CORREÇÃO: Passando o info.chat_id corretamente
+          card.onclick = () => enviarPlano(nome, tipoPlano, preco, info.chat_id);
           card.innerHTML = `
             <img src="${info.imagem}" alt="${nome}" />
             <div class="plan-name">${nome}</div>
@@ -304,7 +229,6 @@
     }
 
     async function enviarPlano(nome, tipo, preco, chat_id) {
-      const tg = window.Telegram.WebApp;
       const user = tg.initDataUnsafe?.user;
 
       if (!user) {
@@ -312,20 +236,18 @@
         return;
       }
 
-      // Prepara o pacote de dados
       const dados = {
         user_id: user.id,
-        nome_plano: nome,
-        tipo: tipo,
+        canal: nome,
+        plano: tipo,
         preco: preco,
-        chat_id: chat_id
+        chat_id: chat_id // Agora preenchido corretamente
       };
 
       tg.MainButton.setText("GERANDO SEU PIX...").show();
       tg.MainButton.showProgress();
 
       try {
-        // URL da SquareCloud (ajustada para o endpoint /webhook)
         const response = await fetch('https://tg-uptoolsbot.squareweb.app/webhook', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -333,34 +255,34 @@
         });
 
         if (response.ok) {
-          tg.close(); // Fecha o WebApp e o PIX aparece no bot
+          tg.close();
         } else {
           alert("Erro ao processar pedido. Tente novamente.");
         }
       } catch (error) {
-        alert("Erro de conexão com o servidor SquareCloud.");
+        alert("Erro de conexão com o servidor.");
         console.error(error);
       } finally {
         tg.MainButton.hide();
       }
     }
 
-    // ===== Background: faíscas subindo =====
+    // ===== Background: Animação =====
     (function(){
-      const DPR = Math.min(devicePixelRat29io || 1, 2);
+      // CORREÇÃO: window.devicePixelRatio
+      const DPR = Math.min(window.devicePixelRatio || 1, 2);
       const c = document.getElementById('sparks');
       const ctx = c.getContext('2d');
       function resize(){
-        const w = innerWidth, h = innerHeight;
+        const w = window.innerWidth, h = window.innerHeight;
         c.style.width = w + 'px'; c.style.height = h + 'px';
         c.width = Math.floor(w * DPR); c.height = Math.floor(h * DPR);
         ctx.setTransform(DPR,0,0,DPR,0,0);
       }
-      resize(); addEventListener('resize', resize, {passive:true});
+      resize(); window.addEventListener('resize', resize, {passive:true});
 
       const palette = [[255,235,200],[255,190,120],[255,140,50],[255,90,25]];
       function makeSprite(r=18){
-        r = Math.max(6,r);
         const off = document.createElement('canvas');
         off.width = off.height = r*4;
         const o = off.getContext('2d');
@@ -371,60 +293,40 @@
         g.addColorStop(.35,`rgba(${c1[0]},${c1[1]},${c1[2]},.85)`);
         g.addColorStop(.7,`rgba(${c2[0]},${c2[1]},${c2[2]},.45)`);
         g.addColorStop(1,`rgba(${c3[0]},${c3[1]},${c3[2]},0)`);
-        o.globalCompositeOperation='lighter';
         o.fillStyle=g; o.beginPath(); o.arc(cx,cy,r*1.8,0,Math.PI*2); o.fill();
         return off;
       }
       let sprite = makeSprite(18);
-
-      const particles=[]; const params={density: 480, rise: 60, wind: 12, gravity: -18, jitter: 12, size: 1.0};
+      const particles=[]; const params={density: 480, size: 1.0};
       const rand=(a,b)=>Math.random()*(b-a)+a;
-      const noise=t=>Math.sin(t)*.5+Math.sin(t*.27+10)*.25+Math.sin(t*1.73+3)*.25;
 
       function spawn(w,h){
-        const ang=rand(-Math.PI*.2,Math.PI*.2);
-        const v=params.rise+rand(-params.jitter,params.jitter);
-        const vx=Math.cos(ang)*v*.25;
-        const vy=-Math.abs(Math.sin(ang)*v)-rand(10,30);
-        return {x:rand(-w*.05,w*1.05), y:h+rand(0,h*.12), vx, vy, age:0, life:rand(1.2,2.6), s:rand(.7,1.4)*params.size, flick:Math.random()*1000};
+        return {x:rand(-w*.05,w*1.05), y:h+rand(0,h*.12), vx:rand(-2,2), vy:rand(-5,-2), age:0, life:rand(1.2,2.6), s:rand(.7,1.4)*params.size, flick:Math.random()*1000};
       }
-
-      (function warm(){
-        const w=c.clientWidth,h=c.clientHeight;
-        const n=Math.min(params.density,900);
-        for(let i=0;i<n;i++){ const p=spawn(w,h); p.y-=Math.random()*h*.9; particles.push(p);}
-      })();
 
       let last=performance.now();
       function tick(){
         const now=performance.now(); const dt=Math.min(.033,(now-last)/1000); last=now;
-        const w=c.clientWidth,h=c.clientHeight;
+        const w=window.innerWidth, h=window.innerHeight;
 
         if(particles.length<params.density){
-          const add=Math.min(params.density-particles.length,24);
-          for(let i=0;i<add;i++) particles.push(spawn(w,h));
-        } else if(particles.length>params.density+20){
-          particles.splice(0,Math.min(20,particles.length));
+          for(let i=0;i<10;i++) particles.push(spawn(w,h));
         }
 
-        const wind=params.wind*noise(now*.001*.35+7.1);
-
-        for(const p of particles){
-          p.vx+=wind*dt*.35; p.vy+=params.gravity*dt;
-          p.x+=p.vx*dt; p.y+=p.vy*dt; p.age+=dt;
-          if(p.age>p.life||p.y<-80||p.x<-120||p.x>w+120){ Object.assign(p, spawn(w,h)); }
+        for(let i=particles.length-1; i>=0; i--){
+          const p = particles[i];
+          p.x+=p.vx; p.y+=p.vy; p.age+=dt;
+          if(p.age>p.life || p.y < -50) particles.splice(i,1);
         }
 
-        ctx.clearRect(0,0,w,h); ctx.globalCompositeOperation='lighter';
+        ctx.clearRect(0,0,w,h);
+        ctx.globalCompositeOperation='lighter';
         for(const p of particles){
           const k=Math.max(0,1-p.age/p.life);
-          const flick=.85+.15*(.5+.5*Math.sin((now*.01+p.flick)*.8));
-          const s=18*p.s*flick;
-          const half=(sprite.width*.5)*(s/18);
-          ctx.globalAlpha=.95*k;
-          ctx.drawImage(sprite,p.x-half,p.y-half,half*2,half*2);
+          const s=18*p.s;
+          ctx.globalAlpha=k;
+          ctx.drawImage(sprite,p.x-s,p.y-s,s*2,s*2);
         }
-        ctx.globalAlpha=1;
         requestAnimationFrame(tick);
       }
       tick();
